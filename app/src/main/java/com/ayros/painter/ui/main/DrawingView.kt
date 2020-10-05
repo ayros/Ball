@@ -29,6 +29,7 @@ class DrawingView @JvmOverloads constructor(
     val shapes = mutableListOf<Shape>()
     var canvas : Canvas? = null
     var isDrawing = false
+    lateinit var shapeGen: ShapeGen
 
     init {
         surfaceHolder.addCallback(this)
@@ -38,6 +39,7 @@ class DrawingView @JvmOverloads constructor(
 
         when(event?.action){
             MotionEvent.ACTION_DOWN -> {
+                shape = shapeGen.createShape()
                 shape?.startDrawing(event.x,event.y)
             }
             MotionEvent.ACTION_MOVE -> shape?.endDrawing(event.x,event.y)
