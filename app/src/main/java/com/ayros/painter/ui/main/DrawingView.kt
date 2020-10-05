@@ -38,7 +38,6 @@ class DrawingView @JvmOverloads constructor(
 
         when(event?.action){
             MotionEvent.ACTION_DOWN -> {
-                shape = PathShape(canvas)
                 shape?.startDrawing(event.x,event.y)
             }
             MotionEvent.ACTION_MOVE -> shape?.endDrawing(event.x,event.y)
