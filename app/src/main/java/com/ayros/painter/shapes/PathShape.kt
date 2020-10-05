@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Path
 import android.view.SurfaceHolder
 
-class PathShape(canvas: SurfaceHolder, color: Int = Color.WHITE) : Shape(canvas, color) {
+class PathShape(color: Int = Color.WHITE) : Shape(color) {
 
     val path = Path()
 

@@ -1,40 +1,33 @@
 package com.ayros.painter.shapes
 
 import android.graphics.Color
-import android.util.Log
-import android.view.SurfaceHolder
 import kotlin.math.sqrt
 
-class CircleShape(surfaceHolder: SurfaceHolder, color: Int = Color.WHITE) :
-    Shape(surfaceHolder, color) {
+class CircleShape(color: Int = Color.WHITE) :
+    Shape(color) {
 
     var x1 = 0f
-    var x2 = 0f
     var y1 = 0f
-    var y2 = 0f
-    var isDrawing = false
+    var r = 0f
+
+    var vector_x = 0f
+    var vector_y = 0f
 
     override fun draw() {
         if (canvas!=null){
-            val d = sqrt((x2 - x1) *(x2 - x1) + (y2 - y1)*(y2 - y1))
-            canvas.drawCircle(x1, y1, d/2, paint)
+            canvas.drawCircle(x1 + vector_x/2, y1 + vector_y/2, r, paint)
         }
     }
 
     override fun startDrawing(x: Float, y: Float) {
-        //canvas = surfaceHolder.lockCanvas()
         x1 = x
         y1 = y
-        Log.d("start", "x1 = $x1")
-        Log.d("start", "y1 = $y1")
+        r = 0f
     }
 
     override fun endDrawing(x: Float, y: Float) {
-        //surfaceHolder.unlockCanvasAndPost(canvas)
-        x2 = x
-        y2 = y
-        isDrawing = true
-        Log.d("end", "x2 = $x2")
-        Log.d("end", "y2 = $y2")
+        r = sqrt((x - x1) *(x - x1) + (y - y1)*(y - y1))/2
+        vector_x = x - x1
+        vector_y = y - y1
     }
 }

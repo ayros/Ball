@@ -5,8 +5,10 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.PixelCopy
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.core.graphics.BitmapCompat
 import androidx.core.view.drawToBitmap
 import com.ayros.painter.shapes.CircleShape
 import com.ayros.painter.shapes.PathShape
@@ -22,7 +24,7 @@ class DrawingView @JvmOverloads constructor(
 ) : SurfaceView(context, attrs, defStyleAttr),SurfaceHolder.Callback,Runnable{
 
     private val surfaceHolder:SurfaceHolder = holder
-    var shape = CircleShape(surfaceHolder)
+    var shape = CircleShape()
     var isDrawing = false
 
     init {
@@ -34,9 +36,11 @@ class DrawingView @JvmOverloads constructor(
         when(event?.action){
             MotionEvent.ACTION_DOWN -> shape.startDrawing(event.x,event.y)
             MotionEvent.ACTION_MOVE -> shape.endDrawing(event.x,event.y)
-            MotionEvent.ACTION_UP -> shape.endDrawing(event.x,event.y)
-
+            MotionEvent.ACTION_UP -> {
+                shape.endDrawing(event.x, event.y)
+            }
         }
+
         return true
     }
 
@@ -58,11 +62,26 @@ class DrawingView @JvmOverloads constructor(
     override fun run() {
         while (isDrawing){
             try {
-
-                shape.asyncDraw()
+                asyncDraw()
             }catch (e: IllegalStateException){
 
             }
+        }
+    }
+
+    fun asyncDraw(){
+        try {
+            val bitmap = drawToBitmap()
+            val canvas = Canvas(bitmap)
+            canvas.drawColor(Color.BLACK)
+            shape.canvas = surfaceHolder.lockCanvas()
+            shape.canvas.drawBitmap(bitmap,0f,0f,shape.paint)
+            shape.draw()
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
+        finally {
+            surfaceHolder.unlockCanvasAndPost(shape.canvas)
         }
     }
 }
