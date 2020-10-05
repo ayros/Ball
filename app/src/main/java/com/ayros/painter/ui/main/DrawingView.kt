@@ -80,7 +80,7 @@ class DrawingView @JvmOverloads constructor(
         try {
             val bitmap = drawToBitmap()
             val canv = Canvas(bitmap)
-            canv.drawColor(Color.BLACK)
+            canv.drawColor(Color.WHITE)
             if(shape != null){
                 canvas = surfaceHolder.lockCanvas()
             }

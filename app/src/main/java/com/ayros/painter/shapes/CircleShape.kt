@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import kotlin.math.sqrt
 
-class CircleShape(canvas: Canvas? = null, color: Int = Color.WHITE) :
+class CircleShape(canvas: Canvas? = null, color: Int = Color.BLACK) :
     Shape(canvas, color) {
 
     var x1 = 0f
