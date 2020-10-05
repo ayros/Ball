@@ -3,6 +3,7 @@ package com.ayros.painter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ayros.painter.shapes.CircleShape
+import com.ayros.painter.shapes.LineShape
 import com.ayros.painter.shapes.PathShape
 import com.ayros.painter.shapes.Shape
 import com.ayros.painter.ui.main.DrawingView
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(), ShapeGen {
     override fun createShape() = when(materialButtonToggleGroup.checkedButtonId){
          point.id -> PathShape(drawing.canvas)
         circle.id -> CircleShape(drawing.canvas)
+        line.id -> LineShape(drawing.canvas)
         else -> PathShape(drawing.canvas)
     }
 }
