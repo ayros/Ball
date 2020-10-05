@@ -1,10 +1,11 @@
 package com.ayros.painter.shapes
 
+import android.graphics.Canvas
 import android.graphics.Color
 import kotlin.math.sqrt
 
-class CircleShape(color: Int = Color.WHITE) :
-    Shape(color) {
+class CircleShape(canvas: Canvas? = null, color: Int = Color.WHITE) :
+    Shape(canvas, color) {
 
     var x1 = 0f
     var y1 = 0f
@@ -15,7 +16,7 @@ class CircleShape(color: Int = Color.WHITE) :
 
     override fun draw() {
         if (canvas!=null){
-            canvas.drawCircle(x1 + vector_x/2, y1 + vector_y/2, r, paint)
+            canvas?.drawCircle(x1 + vector_x/2, y1 + vector_y/2, r, paint)
         }
     }
 

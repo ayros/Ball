@@ -12,6 +12,7 @@ import androidx.core.graphics.BitmapCompat
 import androidx.core.view.drawToBitmap
 import com.ayros.painter.shapes.CircleShape
 import com.ayros.painter.shapes.PathShape
+import com.ayros.painter.shapes.Shape
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -24,7 +25,9 @@ class DrawingView @JvmOverloads constructor(
 ) : SurfaceView(context, attrs, defStyleAttr),SurfaceHolder.Callback,Runnable{
 
     private val surfaceHolder:SurfaceHolder = holder
-    var shape = CircleShape()
+    var shape : Shape? = null
+    val shapes = mutableListOf<Shape>()
+    var canvas : Canvas? = null
     var isDrawing = false
 
     init {
@@ -34,10 +37,14 @@ class DrawingView @JvmOverloads constructor(
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         when(event?.action){
-            MotionEvent.ACTION_DOWN -> shape.startDrawing(event.x,event.y)
-            MotionEvent.ACTION_MOVE -> shape.endDrawing(event.x,event.y)
+            MotionEvent.ACTION_DOWN -> {
+                shape = PathShape(canvas)
+                shape?.startDrawing(event.x,event.y)
+            }
+            MotionEvent.ACTION_MOVE -> shape?.endDrawing(event.x,event.y)
             MotionEvent.ACTION_UP -> {
-                shape.endDrawing(event.x, event.y)
+                shape?.endDrawing(event.x, event.y)
+                shapes.add(shape!!)
             }
         }
 
@@ -72,16 +79,22 @@ class DrawingView @JvmOverloads constructor(
     fun asyncDraw(){
         try {
             val bitmap = drawToBitmap()
-            val canvas = Canvas(bitmap)
-            canvas.drawColor(Color.BLACK)
-            shape.canvas = surfaceHolder.lockCanvas()
-            shape.canvas.drawBitmap(bitmap,0f,0f,shape.paint)
-            shape.draw()
+            val canv = Canvas(bitmap)
+            canv.drawColor(Color.BLACK)
+            if(shape != null){
+                canvas = surfaceHolder.lockCanvas()
+            }
+            canvas?.drawBitmap(bitmap,0f,0f,shape?.paint)
+            shapes.forEach{s -> s.draw()}
+            shape?.draw()
         }catch (e : Exception){
             e.printStackTrace()
         }
         finally {
-            surfaceHolder.unlockCanvasAndPost(shape.canvas)
+            if (shape != null){
+                surfaceHolder.unlockCanvasAndPost(canvas)
+            }
         }
     }
+
 }

@@ -6,9 +6,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.SurfaceHolder
 
-abstract class Shape(val color: Int = Color.WHITE){
+abstract class Shape(var canvas: Canvas? = null,val color: Int = Color.WHITE){
 
-    lateinit var canvas: Canvas
     val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     init {
         paint.style = Paint.Style.STROKE

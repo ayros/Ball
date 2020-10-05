@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Path
 import android.view.SurfaceHolder
 
-class PathShape(color: Int = Color.WHITE) : Shape(color) {
+class PathShape(canvas: Canvas? = null, color: Int = Color.WHITE) : Shape(canvas, color) {
 
     val path = Path()
 
@@ -18,6 +18,6 @@ class PathShape(color: Int = Color.WHITE) : Shape(color) {
     }
 
     override fun draw() {
-        canvas.drawPath(path,paint)
+        canvas?.drawPath(path,paint)
     }
 }
