@@ -98,4 +98,10 @@ class DrawingView @JvmOverloads constructor(
         }
     }
 
+    fun erase(){
+        shapes.removeAll(shapes)
+        shape = shapeGen.createShape()
+        shape?.startDrawing(0f,0f)
+    }
+
 }
