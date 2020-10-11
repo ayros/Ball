@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), ShapeGen {
         circle.id -> CircleShape(drawing.canvas, getShapeColor())
         line.id -> LineShape(drawing.canvas, getShapeColor())
         oval.id -> OvalShape(drawing.canvas, getShapeColor())
+        rect.id -> RectangleShape(drawing.canvas, getShapeColor())
         else -> PathShape(drawing.canvas, getShapeColor())
     }
 
