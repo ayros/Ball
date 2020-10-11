@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ShapeGen {
         erase.setOnClickListener { s -> drawing.erase() }
     }
 
-    override fun createShape() = when(materialButtonToggleGroup.checkedButtonId){
+    override fun createShape() = when(shapeButtonToggleGroup.checkedButtonId){
          point.id -> PathShape(drawing.canvas)
         circle.id -> CircleShape(drawing.canvas)
         line.id -> LineShape(drawing.canvas)
