@@ -2,17 +2,22 @@ package com.ayros.painter.ui.main
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.PixelCopy
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.BitmapCompat
 import androidx.core.view.drawToBitmap
+import com.ayros.painter.animation.BallThread
 import com.ayros.painter.shapes.CircleShape
+import com.ayros.painter.shapes.OvalShape
 import com.ayros.painter.shapes.PathShape
 import com.ayros.painter.shapes.Shape
+import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -25,11 +30,11 @@ class DrawingView @JvmOverloads constructor(
 ) : SurfaceView(context, attrs, defStyleAttr),SurfaceHolder.Callback,Runnable{
 
     private val surfaceHolder:SurfaceHolder = holder
-    var shape : Shape? = null
-    val shapes = mutableListOf<Shape>()
+    private lateinit var thread : BallThread
+    lateinit var shape : OvalShape
+    //val shapes = mutableListOf<Shape>()
     var canvas : Canvas? = null
     var isDrawing = false
-    lateinit var shapeGen: ShapeGen
 
     init {
         surfaceHolder.addCallback(this)
@@ -38,16 +43,11 @@ class DrawingView @JvmOverloads constructor(
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         when(event?.action){
-            MotionEvent.ACTION_DOWN -> {
-                shape = shapeGen.createShape()
-                shape?.startDrawing(event.x,event.y)
-            }
-            MotionEvent.ACTION_MOVE -> shape?.endDrawing(event.x,event.y)
-            MotionEvent.ACTION_UP -> {
-                shape?.endDrawing(event.x, event.y)
-                shapes.add(shape!!)
-            }
+            MotionEvent.ACTION_DOWN -> if(shape.rect.contains(event.x,event.y)) thread.stopBall(event.x, event.y)
+            MotionEvent.ACTION_UP -> if(thread.vectorX == 0f && thread.vectorY == 0f) thread.resumeBall(event.x, event.y)
         }
+        //if(shape.rect.contains(event.x, event.y)){
+
 
         return true
     }
@@ -55,6 +55,11 @@ class DrawingView @JvmOverloads constructor(
     override fun surfaceCreated(holder: SurfaceHolder?) {
         Log.d("created", "created")
         isDrawing = true
+        shape = OvalShape(canvas)
+        val rect = RectF(0f,0f, width.toFloat(),height.toFloat())
+        thread = BallThread(shape,rect)
+        surfaceHolder.addCallback(thread)
+        Thread(thread).start()
         Thread(this).start()
     }
 
@@ -82,26 +87,20 @@ class DrawingView @JvmOverloads constructor(
             val bitmap = drawToBitmap()
             val canv = Canvas(bitmap)
             canv.drawColor(Color.WHITE)
-            if(shape != null){
-                canvas = surfaceHolder.lockCanvas()
-            }
-            canvas?.drawBitmap(bitmap,0f,0f,shape?.paint)
-            shapes.forEach{s -> s.draw()}
-            shape?.draw()
+            canvas = surfaceHolder.lockCanvas()
+            canvas?.drawBitmap(bitmap,0f,0f,shape.paint)
+            shape.canvas = canvas
+            shape.draw()
         }catch (e : Exception){
             e.printStackTrace()
         }
         finally {
-            if (shape != null){
-                surfaceHolder.unlockCanvasAndPost(canvas)
-            }
+            surfaceHolder.unlockCanvasAndPost(canvas)
         }
     }
 
     fun erase(){
-        shapes.removeAll(shapes)
-        shape = shapeGen.createShape()
-        shape?.startDrawing(0f,0f)
+        //shape?.startDrawing(0f,0f)
     }
 
 }
