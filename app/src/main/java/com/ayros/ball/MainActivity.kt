@@ -1,12 +1,8 @@
-package com.ayros.painter
+package com.ayros.ball
 
-import android.graphics.Color
-import android.graphics.RectF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ayros.painter.animation.BallThread
-import com.ayros.painter.shapes.*
-import com.ayros.painter.ui.main.DrawingView
+import com.ayros.ball.ui.main.DrawingView
 
 
 class MainActivity : AppCompatActivity(){

@@ -1,10 +1,8 @@
-package com.ayros.painter.shapes
+package com.ayros.ball.shapes
 
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.view.SurfaceHolder
 
 abstract class Shape(var canvas: Canvas? = null,val color: Int = Color.BLACK){
 

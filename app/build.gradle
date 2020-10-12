@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.ayros.painter"
+        applicationId "com.ayros.ball"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

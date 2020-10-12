@@ -1,9 +1,8 @@
-package com.ayros.painter.animation
+package com.ayros.ball.animation
 
 import android.graphics.RectF
 import android.view.SurfaceHolder
-import com.ayros.painter.shapes.OvalShape
-import com.ayros.painter.shapes.Shape
+import com.ayros.ball.shapes.Shape
 
 
 class BallThread(val shape: Shape, val cell : RectF) : Runnable, SurfaceHolder.Callback {

@@ -1,4 +1,4 @@
-package com.ayros.painter.ui.main
+package com.ayros.ball.ui.main
 
 import android.content.Context
 import android.graphics.*
@@ -8,8 +8,8 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.core.view.drawToBitmap
-import com.ayros.painter.animation.BallThread
-import com.ayros.painter.shapes.OvalShape
+import com.ayros.ball.animation.BallThread
+import com.ayros.ball.shapes.OvalShape
 import java.lang.IllegalStateException
 
 class DrawingView @JvmOverloads constructor(

@@ -1,9 +1,8 @@
-package com.ayros.painter.shapes
+package com.ayros.ball.shapes
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.RectF
-import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
 import androidx.annotation.RequiresApi
 

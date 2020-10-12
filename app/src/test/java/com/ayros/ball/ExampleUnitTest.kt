@@ -1,4 +1,4 @@
-package com.ayros.painter
+package com.ayros.ball
 
 import org.junit.Test
 
