@@ -59,7 +59,7 @@ class DrawingView @JvmOverloads constructor(
     }
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-        //var bitmap = this.drawToBitmap()
+
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
