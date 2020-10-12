@@ -16,7 +16,7 @@ abstract class Shape(var canvas: Canvas? = null,val color: Int = Color.BLACK){
     var y2 = 0f
 
     init {
-        paint.style = Paint.Style.STROKE
+        paint.style = Paint.Style.FILL_AND_STROKE
         paint.strokeWidth = 3f
         paint.color = color
     }

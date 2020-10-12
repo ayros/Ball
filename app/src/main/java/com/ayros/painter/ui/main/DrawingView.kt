@@ -2,27 +2,14 @@ package com.ayros.painter.ui.main
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.PixelCopy
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.annotation.RequiresApi
-import androidx.core.graphics.BitmapCompat
 import androidx.core.view.drawToBitmap
 import com.ayros.painter.animation.BallThread
-import com.ayros.painter.shapes.CircleShape
 import com.ayros.painter.shapes.OvalShape
-import com.ayros.painter.shapes.PathShape
-import com.ayros.painter.shapes.Shape
-import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.internal.synchronized
-import kotlinx.coroutines.launch
 import java.lang.IllegalStateException
 
 class DrawingView @JvmOverloads constructor(
